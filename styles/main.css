@@ -23,7 +23,7 @@ body {
 }
 
 html.night-mode {
-    --background: #747477;
+    --background: #202024;
     /* --is-day: #353941; */
 }
 
@@ -163,7 +163,8 @@ header {
 }
 
 .night-mode header {
-    background-color: var(--is-day);
+    background: #121214;
+   /*  background-color: var(--is-day);  */
 }
 
 header #logo {
@@ -229,12 +230,18 @@ header #logo {
 }
 
 /* CARDS */
+
+
 .card {
     background-color: #fff;
     padding: 1.5rem 2rem;
     border-radius: 4px;
     margin-bottom: 2rem;
     color: var(--dark-blue);
+}
+.night-mode .card {
+    background-color: #1c1c1c;
+    color: #FFFFFF;
 }
 
 .card h3 {
@@ -280,6 +287,12 @@ header #logo {
     
 }
 
+.night-mode #filter-description {
+background-color: #1c1c1c;
+
+    color: #969cb3;
+}
+
 /* TRANSACTIONS */
 #transactions {
     display: block;
@@ -292,8 +305,14 @@ header #logo {
 #data-table {
     width: 100%;
     border-spacing: 0 .5rem;
-    color: #858997;
+    color: #858997; 
+    text-align: left;
+}
 
+.night-mode #data-table {
+    width: 100%;
+    border-spacing: 0 .5rem;
+    color: #969cb3; 
     text-align: left;
 }
 
@@ -311,6 +330,11 @@ table th {
     font-weight: 400;
 }
 
+.night-mode th {
+    background-color: #1c1c1c;
+}
+
+
 table thead tr th:first-child, 
 table tbody tr td:first-child {
     border-radius: .25rem 0 0 .25rem;        
@@ -321,15 +345,20 @@ table tbody tr td:last-child {
     border-radius: 0 .25rem .25rem 0;        
 }
 
+
 table td {
     background-color: #fff;
 
     padding: 1rem 2rem;
 }
 
-.data-table__description {
-    color: var(--dark-blue);
+.night-mode table td {
+    background-color: #1c1c1c;
 }
+
+/* .data-table__description {
+    color: var(--dark-blue);
+} */
 
 .data-table__price-income {
     color: #12a454;
@@ -395,6 +424,9 @@ input {
     outline: none; /* Remover o contorno */
   }
 
+
+  
+
 .modal {
     position: relative;
     background-color:var(--background);
@@ -415,6 +447,12 @@ input {
     opacity: 0.8;
 }
 
+.night-mode #form h2 {
+    margin-top: 0;
+    color: #FFFFFF;
+    opacity: 0.8;
+}
+
 .input-group {
     margin-top: .8rem;
 }
@@ -423,9 +461,16 @@ input {
     border: none;
     border-radius: .25rem;
     padding: 0.8rem;
-
+    
     width: 100%;
 }
+
+.night-mode .input-group input {
+    background-color: #1c1c1c;
+color: #969cb3;
+}
+
+
 
 .input-group small {
     opacity: .4;
