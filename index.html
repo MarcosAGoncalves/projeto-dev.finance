@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,800;1,100;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/animations.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+    <title>dev.finance$</title>
+</head>
+
+<body>
+
+    <div id="notification" class="notification">
+       
+    </div>
+
+    <div class="app">
+        <header>
+            <div class="header__content container">
+                <img src="/assets/logo.svg" alt="Dev Finance">
+
+                <div class="control-theme" title="Alterar tema">
+                    <input type="checkbox" class="control-theme__switch sr-only" id="theme-switch" />
+                    <label for="theme-switch" class="theme-switch-label">
+
+                        <div class="theme-switch-circle"></div>
+                    </label>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <section class="balance">
+                <h2 class="sr-only">Balanço</h2>
+
+                <div class="card">
+                    <h3>
+                        <span>Entradas</span>
+                        <img src="assets/income.svg" alt="Imagem de entradas">
+                    </h3>
+                    <p class="card__income">R$ 0,00</p>
+                </div>
+
+                <div class="card">
+                    <h3>
+                        <span>Saidas</span>
+                        <img src="assets/expense.svg" alt="Imagem de saidas">
+                    </h3>
+
+                    <p class="card__expense">R$ 0,00</p>
+                </div>
+
+                <div class="card total">
+                    <h3>
+                        <span>Total</span>
+                        <svg class='test' width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 1.33333V30.6667" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M22.6667 6.66667H12.6667C11.429 6.66667 10.242 7.15834 9.36684 8.03351C8.49167 8.90868 8 10.0957 8 11.3333C8 12.571 8.49167 13.758 9.36684 14.6332C10.242 15.5083 11.429 16 12.6667 16H19.3333C20.571 16 21.758 16.4917 22.6332 17.3668C23.5083 18.242 24 19.429 24 20.6667C24 21.9043 23.5083 23.0913 22.6332 23.9665C21.758 24.8417 20.571 25.3333 19.3333 25.3333H8"
+                                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </h3>
+                    <p class="card__amount">R$ 0,00</p>
+                </div>
+            </section>
+
+
+            <section id="transactions">
+                <h2 class="sr-only">Transações</h2>
+                
+                
+                <div class="new-transaction">
+                    <a href="#" class="button new" alt="Nova Transação" title="Criar Nova Transação" onClick="Modal.open()">+ Transação </a>
+                </div>
+                <!-- Campo de filtro para a descrição -->
+                
+                <div class="filter-container">
+                    <input type="text" id="filter-description" placeholder="Digite a descrição..." alt="Digite a Descrição"
+                        oninput="filterTransactions()">
+                    
+                    <!-- <img class="data-table-edit-new" onClick="Modal.open()" src="public/assets/test/cash-flow.png"
+                        alt="Adicionar Transação" title="Adicionar Transação"> -->
+                    <img class="data-table-edit-new" onclick="exportToExcel()" src="assets/excel.png"
+                    alt="Exportar para Excel" title="Exportar para Excel">
+
+                    <img class="data-table-edit-new" onclick="exportToPDF()" src="assets/PDF.png"
+                    alt="Exportar para PDF" title="Exportar para PDF">
+
+                        <!-- <button class="export" onclick="exportToExcel()">Excel</button>
+                        <button class="export" onclick="exportToPDF()">PDF</button> -->
+                    </div>
+
+                
+
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-column="description">Descrição</th>
+                            <th class="sortable" data-column="amount">Valor</th>
+                            <th class="sortable" data-column="date">Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+        <canvas class="chart">
+
+        </canvas>
+
+        <div class="modal-overlay">
+            <div class="modal">
+                <div class="modal__content">
+                    <div id="form">
+                        <h2>Nova Transação</h2>
+
+                        <form action="" onSubmit="Form.submit(event)">
+                            <div class="input-group invalid">
+                                <label for="description" class="sr-only">Descrição</label>
+                                <input type="text" name="description" id="description" title="Inserir Descrição" placeholder="Descrição" />
+                            </div>
+
+                            <div class="input-group invalid">
+                                <label for="amout" class="sr-only">Valor</label>
+                                <input type="number" step="0.01" name="amount" id="amount" placeholder="R$ 0.00"
+                                    title="Inserir Valor">
+
+                            </div>
+
+                            <div class="input-group invalid">
+                                <label for="date" class="sr-only">Data</label>
+                                <input type="date" step="0.01" name="date" title="Inserir Data" id="date" />
+                            </div>
+
+                            <input class="sr-only" type="text" name="edit" id="edit" data-index />
+
+                            <div class="input-group actions">
+                                <a href="#" class="button cancel" title="Cancelar Transação" onClick="Modal.close()">Cancelar</a>
+                                <button title="Salvar Transação">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Confirmação de Exclusão -->
+<div class="modal-overlay" id="delete-modal-overlay">
+    <div class="modal">
+        <h2>Deseja realmente excluir a transação?</h2>
+        <div class="input-group actions">
+            <button class="button cancel" onClick="closeDeleteModal()">Não</button>
+            <button class="button confirm" onClick="confirmDelete()">Sim</button>
+        </div>
+    </div>
+</div>
+        
+
+        <footer class="container">
+            <p>dev.finance$</p>
+        </footer>
+
+
+
+
+    </div>
+
+    <!-- <script>
+        let ctx = document.getElementsByClassName('chart');
+
+        let chartGraph = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'te', 'x'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3, 8, 15],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script> -->
+    <script src="scripts/scripts.js"></script>
+    <script src="scripts/theme.js"></script>
+    <script src="scripts/animation.js"></script>
+</body>
+
+</html>
