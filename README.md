@@ -44,4 +44,5 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 ---
 
 Projeto base realizado pela Rocketseat na maratona discovery.
+
 Melhorias e atualizações de funcionalidades realizado por Marcos Antonio.
