@@ -105,9 +105,10 @@
                 <div class="filter-container">
                     <input type="text" id="filter-description" placeholder="Digite a descrição..." alt="Digite a Descrição"
                         oninput="filterTransactions()">
-                    <img class="data-table-edit-new" onclick="exportToExcel()" src="assets/excel.png"
+
+                    <img class="export" onclick="exportToExcel()" src="assets/excel.png"
                         alt="Exportar para Excel" title="Exportar para Excel">
-                    <img class="data-table-edit-new" onclick="exportToPDF()" src="assets/PDF.png"
+                    <img class="export" onclick="exportToPDF()" src="assets/PDF.png"
                         alt="Exportar para PDF" title="Exportar para PDF">
                 </div>
 
@@ -170,8 +171,8 @@
             <div class="modal">
                 <h2>Deseja realmente excluir a transação?</h2>
                 <div class="input-group actions">
-                    <button class="button cancel" onClick="closeDeleteModal()">Não</button>
-                    <button class="button confirm" onClick="confirmDelete()">Sim</button>
+                    <button class="button-modal-confirm" onClick="confirmDelete()">Sim</button>
+                    <button class="button-modal-cancel" onClick="closeDeleteModal()">Não, cancelar</button>
                 </div>
             </div>
         </div>
@@ -180,8 +181,8 @@
         <footer class="container">
             <p>dev.finance$</p>
             <p>Atualizado por Marcos Antonio</p>
-            <a href="https://github.com/marcosagoncalves" target="_blank"><img class="icon" src="./assets/github.svg" alt="GitHub"></a>
-            <a class="icon" href="https://www.linkedin.com/in/marcosagsilva/" target="_blank"><img class="icon" src="./assets/linkedin.svg" alt="Linkedin"></a>
+            <a href="https://github.com/marcosagoncalves" target="_blank"><img class="icon"  src="./assets/github.svg" alt="GitHub"></a>
+            <a href="https://www.linkedin.com/in/marcosagsilva/" target="_blank"><img class="icon" src="./assets/linkedin.svg" alt="Linkedin"></a>
         </footer>
 
     </div>
