@@ -49,8 +49,24 @@ function exportToExcel() {
   const ws = XLSX.utils.aoa_to_sheet(data);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Transações");
-  XLSX.writeFile(wb, "transacoes.xlsx");
+
+  // Obtém a data e hora atual do Brasil
+  const currentDate = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  
+  // Formata a data e hora
+  const [datePart, timePart] = currentDate.split(' ');
+  const [day, month, year] = datePart.split('/');
+  const [hour, minute, second] = timePart.split(':');
+
+  const formattedDate = `${day}-${month}-${year}_${hour.padStart(2, '0')}-${minute.padStart(2, '0')}-${second.padStart(2, '0')}`;
+
+  // Define o nome do arquivo com a data e hora
+  const fileName = `transacoes_${formattedDate}.xlsx`;
+
+  // Exporta o arquivo com o nome atualizado
+  XLSX.writeFile(wb, fileName);
 }
+
 
 function exportToPDF() {
   const rows = document.querySelectorAll('#data-table tbody tr');
@@ -90,7 +106,21 @@ function exportToPDF() {
     y += 10;
   });
 
-  doc.save("transacoes.pdf");
+  // Obtém a data e hora atual do Brasil
+  const currentDate = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+
+  // Formata a data e hora
+  const [datePart, timePart] = currentDate.split(' ');
+  const [day, month, year] = datePart.split('/');
+  const [hour, minute, second] = timePart.split(':');
+
+  const formattedDate = `${day}-${month}-${year}_${hour.padStart(2, '0')}-${minute.padStart(2, '0')}-${second.padStart(2, '0')}`;
+
+  // Define o nome do arquivo com a data e hora
+  const fileName = `transacoes_${formattedDate}.pdf`;
+
+  // Salva o PDF com o nome atualizado
+  doc.save(fileName);
 }
 
 // Notificação de ações
