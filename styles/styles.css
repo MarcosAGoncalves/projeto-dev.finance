@@ -15,18 +15,12 @@ body {
     --blueButton: #467ec3;
     --redButton: #e92929;
     --greenNotification: #28a745;
-
-
     --background: #f0f2f5;
     --is-day: linear-gradient(180deg, #040645, #172e8a 60%);
     --dark-blue:#363f5f;
     --green: #467ec3;
     --light-green: #3dd705;
     --red: #e92929;
-
-
-
-
     transition: 0.5s all ease;
 }
 
@@ -35,7 +29,8 @@ html.night-mode {
     /* --is-day: #353941; */
 }
 
-/* THEME CONTROL */
+
+
 
 
 /* CSS Trick para manter elemento invisivel sem afetar leitores de tela */
@@ -140,8 +135,6 @@ button:hover {
     opacity: .8;
 }
 
-
-
 .button.cancel:hover {
     opacity: 1;
 }
@@ -186,6 +179,44 @@ header #logo {
     position: relative;
 }
 
+
+/* ----------------------------------------- */
+
+/* BALANCE */
+.balance {
+    margin-top: -8rem;
+}
+
+.balance h2 {
+    color: #fff;
+    margin-top: 0;    
+}
+
+
+/* TRANSACTIONS */
+#transactions {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+
+
+/* ===== RESPONSIVIDADE ===== */
+@media (min-width: 800px) {
+    html {
+        font-size: 87.5%;
+    }
+
+    .balance {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+}
+/* ========== */
+
+
+/* ===== THEME ===== */
 .control-theme {
     position: absolute;
     top: 50%;
@@ -225,19 +256,20 @@ header #logo {
     background-color: #fff;
     transform: translateX(17px);
 }
-/* ----------------------------------------- */
+/* ========== */
 
-/* BALANCE */
-.balance {
-    margin-top: -8rem;
+
+/* ===== CARDS TOPO ===== */
+.animate path { 
+	animation: svg-animate 4s forwards normal;
 }
 
-.balance h2 {
-    color: #fff;
-    margin-top: 0;    
+@keyframes svg-animate {
+	from {}
+	to {
+		stroke-dashoffset: 0;
+	}
 }
-
-/* CARDS */
 
 .card {
     background-color: #fff;
@@ -271,27 +303,43 @@ header #logo {
     background-color: var(--green);
     color: #fff;
 }
-/* ----------------------------------------- */
 
-/* TRANSACTIONS */
-#transactions {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
+/* ========== */
+
+
+/* ===== TABELA ===== */
+th.sortable {
+    cursor: pointer;
+    position: relative;
 }
 
+th.sortable::after {
+    content: '\2193'; /* Seta para baixo */
+    position: absolute;
+    left: 15px;
+    top: 46%;
+    transform: translateY(-50%);
+    font-size: 12px;
+}
+
+th.sortable[data-order="asc"]::after {
+    content: '\2191'; /* Seta para cima */
+}
+
+th.sortable[data-order="desc"]::after {
+    content: '\2193'; /* Seta para baixo */
+}
 
 #data-table {
     width: 100%;
     border-spacing: 0 .5rem;
-    color: #858997; 
     text-align: left;
 }
 
 .night-mode #data-table {
     width: 100%;
     border-spacing: 0 .5rem;
-    color: #969cb3; 
+    color: #FFFFFF; 
     text-align: left;
 }
 
@@ -348,228 +396,6 @@ table td {
     margin-right: 10px;
     cursor: pointer;
 }
-/* ----------------------------------------- */
-
-.modal-overlay {
-    background-color: rgba(0, 0, 0, .7);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    opacity: 0;
-    visibility: hidden;
-    z-index: 2;
-}
-
-.modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-input {
-    border: 1px solid #ccc; /* Borda padrão */
-  }
-  
-  input:focus {
-    border: 1px solid #999; /* Borda mais clara quando focado */
-    outline: none; /* Remover o contorno */
-  }
-
-.modal {
-    position: relative;
-    background-color:var(--background);
-    max-width: 500px;
-    width: 90%;
-    height: 340px;
-    border-radius: 0.25rem;
-    padding: 2.4rem;
-}
-
-#form {
-    max-width: 500px;
-}
-
-#form h2 {
-    margin-top: 0;
-    color: black;
-    opacity: 0.8;
-}
-
-.night-mode #form h2 {
-    margin-top: 0;
-    color: #FFFFFF;
-    opacity: 0.8;
-}
-
-.input-group {
-    margin-top: .8rem;
-}
-
-.input-group input {
-    border: none;
-    border-radius: .25rem;
-    padding: 0.8rem;
-    
-    width: 100%;
-}
-
-.night-mode .input-group input {
-    background-color: #1c1c1c;
-color: #969cb3;
-}
-
-
-.input-group small {
-    opacity: .4;
-}
-
-.input-group.actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.input-group.actions .button, 
-.input-group.actions button {
-    width: 48%;
-}
-
-
-/* RESPONSIVE */
-
-@media (min-width: 800px) {
-    html {
-        font-size: 87.5%;
-    }
-
-    .balance {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-    }
-}
-
-  /* Para o campo input, que terá um cursor indicando que ele pode ser interagido */
-  #amount {
-    position: relative;
-  }
-
-/* Adiciona borda vermelha quando o campo estiver inválido */
-/* A borda normal para os campos */
-input {
-    border: 1px solid #ccc; /* Cor de borda padrão */
-}
-
-input.invalid {
-    border: 1px solid red;
-}
-
-input.invalid:focus {
-    border-color: darkred;
-}
-
-  
-th.sortable {
-    cursor: pointer;
-    position: relative;
-}
-
-th.sortable::after {
-    content: '\2193'; /* Seta para baixo */
-    position: absolute;
-    left: 15px;
-    top: 46%;
-    transform: translateY(-50%);
-    font-size: 12px;
-}
-
-th.sortable[data-order="asc"]::after {
-    content: '\2191'; /* Seta para cima */
-}
-
-th.sortable[data-order="desc"]::after {
-    content: '\2193'; /* Seta para baixo */
-}
-
-/* Adiciona uma classe para o modal de exclusão (opcional) */
-#delete-modal-overlay .modal {
-    background-color: #fff; /* Cor de fundo branca */
-    max-width: 400px; /* Ajuste do tamanho */
-    width: 90%; /* Responsivo */
-    padding: 2rem;
-    text-align: center;
-    border-radius: 0.5rem;
-    
-}
-
-/* Para as ações de botão (confirmar/excluir) */
-.input-group.actions .button.confirm {
-    /* background-color: var(--red); */
-    margin-top: 70px;
-    background-color: #467ec3;
-     /* Cor vermelha para o botão de exclusão */
-    opacity: 0.8;
-}
-
-.input-group.actions .button.confirm:hover {
-    /* background-color: var(--red); */
-    background-color: #467ec3;
-     /* Cor vermelha para o botão de exclusão */
-    opacity: 1;
-}
-
-.input-group.actions .button.cancel {
-    /* background-color: #467ec3;  *//* Cor verde para o botão de cancelamento */
-    opacity: 0.8;
-}
-
-.input-group.actions .button.cancel:hover {
-    /* background-color: #467ec3; */ /* Cor verde para o botão de cancelamento */
-    opacity: 1;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/* ========== */
-/* ========== */
-/* ========== */
-/* ========== */
-/* ========== */
-/* ========== */
-/* ========== */
-/* ========== */
-
-
-
-/* ===== DAQUI PARA BAIXO ORGANIZADO ===== */
-
-/* ===== CARDS TOPO ===== */
-.animate path { 
-	animation: svg-animate 4s forwards normal;
-}
-
-@keyframes svg-animate {
-	from {}
-	to {
-		stroke-dashoffset: 0;
-	}
-}
-
 /* ========== */
 
 
@@ -616,12 +442,158 @@ th.sortable[data-order="desc"]::after {
 
 /* ===== MODAL NOVA TRANSAÇÃO ===== */
 
+ /* Para o campo input, que terá um cursor indicando que ele pode ser interagido */
+ #amount {
+    position: relative;
+  }
 
+/* Adiciona borda vermelha quando o campo estiver inválido */
+/* A borda normal para os campos */
+input {
+    border: 1px solid #ccc; /* Cor de borda padrão */
+}
+
+input.invalid {
+    border: 1px solid red;
+}
+
+input.invalid:focus {
+    border-color: darkred;
+}
+
+.modal {
+    position: relative;
+    background-color:var(--background);
+    max-width: 500px;
+    width: 90%;
+    height: 340px;
+    border-radius: 0.25rem;
+    padding: 2.4rem;
+}
+
+#form {
+    max-width: 500px;
+}
+
+#form h2 {
+    margin-top: 0;
+    color: black;
+    opacity: 0.8;
+}
+
+.modal-overlay {
+    background-color: rgba(0, 0, 0, .7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+    z-index: 2;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+input {
+    border: 1px solid #ccc; /* Borda padrão */
+  }
+  
+  input:focus {
+    border: 1px solid #999; /* Borda mais clara quando focado */
+    outline: none; /* Remover o contorno */
+  }
+
+
+.night-mode #form h2 {
+    margin-top: 0;
+    color: #FFFFFF;
+    opacity: 0.8;
+}
+
+.input-group {
+    margin-top: .8rem;
+}
+
+.input-group input {
+    border: none;
+    border-radius: .25rem;
+    padding: 0.8rem;
+    
+    width: 100%;
+}
+
+.night-mode .input-group input {
+    background-color: #1c1c1c;
+    color: #FFFFFF;
+    opacity: .4;
+}
+
+.input-group small {
+    opacity: .4;
+}
+
+.input-group.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-group.actions .button, 
+.input-group.actions button {
+    width: 48%;
+}
+
+
+/* Adiciona uma classe para o modal de exclusão (opcional) */
+#delete-modal-overlay .modal {
+    background-color: #fff; /* Cor de fundo branca */
+    max-width: 400px; /* Ajuste do tamanho */
+    width: 90%; /* Responsivo */
+    padding: 2rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    
+}
+
+/* Para as ações de botão (confirmar/excluir) */
+.input-group.actions .button.confirm {
+    /* background-color: var(--red); */
+    margin-top: 70px;
+    background-color: #467ec3;
+     /* Cor vermelha para o botão de exclusão */
+    opacity: 0.8;
+}
+
+.input-group.actions .button.confirm:hover {
+    /* background-color: var(--red); */
+    background-color: #467ec3;
+     /* Cor vermelha para o botão de exclusão */
+    opacity: 1;
+}
+
+.input-group.actions .button.cancel {
+    /* background-color: #467ec3;  *//* Cor verde para o botão de cancelamento */
+    opacity: 0.8;
+}
+
+.input-group.actions .button.cancel:hover {
+    /* background-color: #467ec3; */ /* Cor verde para o botão de cancelamento */
+    opacity: 1;
+}
 
 /* ========== */
 
 
-/* ===== MODAL EXCLUIR ===== */
+/* ===== MODAL ACTION ===== */
 .button-modal-confirm {
     margin-top: 70px;
     background-color: var(--blueButton);
@@ -641,6 +613,14 @@ th.sortable[data-order="desc"]::after {
 
 .button-modal-cancel:hover {
     opacity: 1;
+}
+
+#modal-message-action {
+    color:black;
+}
+
+.night-mode #modal-message-action {
+    color:#FFFFFF;
 }
 
 /* ========== */

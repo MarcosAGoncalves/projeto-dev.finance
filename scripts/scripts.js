@@ -134,26 +134,54 @@ function showNotification(message) {
   }, 3000);
 }
 
-// Funções de modal de exclusão
-const deleteModalOverlay = document.getElementById("delete-modal-overlay");
-let transactionIndexToDelete = null;
+// Funções de modal de Ações
+const ModalActionsOverlay = document.getElementById("modal-action-overlay");
+let transactionIndex = null;
+let actionType = null; // Pode ser 'duplicate' ou 'delete'
 
-function openDeleteModal(index) {
-  transactionIndexToDelete = index;
-  deleteModalOverlay.classList.add("active");
-}
+// Função para abrir o modal com a ação específica
+function openModal(index, action) {
+  transactionIndex = index;
+  actionType = action; // Definindo o tipo de ação (duplicar ou excluir)
 
-function closeDeleteModal() {
-  deleteModalOverlay.classList.remove("active");
-}
-
-function confirmDelete() {
-  if (transactionIndexToDelete !== null) {
-      Transaction.all.splice(transactionIndexToDelete, 1);
-      showNotification("Transação deletada com sucesso!");
-      App.reload();
+  const title = document.querySelector('#modal-message-action');
+  if (actionType === 'duplicate') {
+    title.textContent = 'Deseja realmente duplicar a transação?';
+  } else if (actionType === 'delete') {
+    title.textContent = 'Deseja realmente excluir a transação?';
   }
-  closeDeleteModal();
+
+  ModalActionsOverlay.classList.add("active");
+}
+
+// Função para fechar o modal
+function closeModal() {
+  ModalActionsOverlay.classList.remove("active");
+}
+
+// Função para confirmar a ação (duplicar ou excluir)
+function confirmModal() {
+  if (transactionIndex !== null) {
+    if (actionType === 'delete') {
+      // Código para deletar
+      Transaction.all.splice(transactionIndex, 1);
+      showNotification("Transação deletada com sucesso!");
+    } else if (actionType === 'duplicate') {
+      // Código para duplicar
+      const transactionToDuplicate = Transaction.all[transactionIndex];
+      const duplicatedTransaction = {
+        ...transactionToDuplicate,
+        description: `${transactionToDuplicate.description} (Cópia)`,
+      };
+      Transaction.all.push(duplicatedTransaction);
+      AudioFile.play();
+      showNotification("Transação duplicada com sucesso!");
+    }
+
+    App.reload(); // Atualiza a interface após a ação
+  }
+
+  closeModal(); // Fecha o modal após a ação
 }
 
 // Armazenamento local
@@ -178,41 +206,38 @@ const AudioFile = {
 };
 
 // Transações
+// Transações
 const Transaction = {
   all: Storage.get(),
+  
   add(transaction) {
     AudioFile.play();
     if (transaction.edit === 'true') {
       Transaction.all[transaction.transactionEditNumber] = transaction;
-      showNotification("Transação editada com sucesso!");  
+      showNotification("Transação editada com sucesso!");
     } else {
       Transaction.all.push(transaction);
       showNotification("Transação criada com sucesso!");
     }
-    
+
     App.reload();
   },
+  
   edit(index) {
     Modal.setValues(Transaction.all[index], index);
     Modal.open(true);
   },
 
   remove(index) {
-    openDeleteModal(index);
+    openModal(index, 'delete'); // Passa a ação de excluir
   },
 
   duplicate(index) {
-    const transactionToDuplicate = Transaction.all[index];
-    const duplicatedTransaction = {
-      ...transactionToDuplicate,
-      description: `${transactionToDuplicate.description} (Cópia)`,
-    };
-    
-    Transaction.all.push(duplicatedTransaction);
-    AudioFile.play();
-    showNotification("Transação duplicada com sucesso!");
-    App.reload();
+    openModal(index, 'duplicate'); // Passa a ação de duplicar
   },
+
+
+
   incomes() {
     let income = 0;
 

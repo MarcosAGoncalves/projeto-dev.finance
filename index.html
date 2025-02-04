@@ -43,7 +43,7 @@
 
                 <!-- Controle de tema -->
                 <div class="control-theme" title="Alterar tema">
-                    <input type="checkbox" class="control-theme__switch sr-only" id="theme-switch" />
+                    <input type="checkbox" class="control-theme__switch sr-only" id="theme-switch" title="Alterar o tema" />
                     <label for="theme-switch" class="theme-switch-label">
                         <div class="theme-switch-circle"></div>
                     </label>
@@ -167,12 +167,12 @@
         </div>
 
         <!-- Modal de confirmação de exclusão de transação -->
-        <div class="modal-overlay" id="delete-modal-overlay">
+        <div class="modal-overlay" id="modal-action-overlay">
             <div class="modal">
-                <h2>Deseja realmente excluir a transação?</h2>
+                <h2 id="modal-message-action">Deseja realmente excluir a transação?</h2>
                 <div class="input-group actions">
-                    <button class="button-modal-confirm" onClick="confirmDelete()">Sim</button>
-                    <button class="button-modal-cancel" onClick="closeDeleteModal()">Não, cancelar</button>
+                    <button class="button-modal-confirm" onClick="confirmModal()">Sim</button>
+                    <button class="button-modal-cancel" onClick="closeModal()">Não, cancelar</button>
                 </div>
             </div>
         </div>
